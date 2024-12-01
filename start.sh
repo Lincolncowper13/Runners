@@ -2,7 +2,7 @@
 
 # Buat folder untuk runner dan pindah ke folder tersebut
 echo "Creating runner directory..."
-mkdir -p actions-runner && cd actions-runner
+mkdir -p /home/runner/actions-runner && cd /home/runner/actions-runner
 
 # Unduh paket runner terbaru
 echo "Downloading GitHub Actions Runner..."
@@ -20,10 +20,20 @@ fi
 echo "Extracting GitHub Actions Runner package..."
 tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz
 
+# Buat user baru untuk menjalankan runner (bukan root)
+echo "Creating a non-root user for the runner..."
+useradd -m -s /bin/bash runner
+
+# Berikan hak akses ke direktori runner
+chown -R runner:runner /home/runner/actions-runner
+
+# Pindah ke direktori runner
+cd /home/runner/actions-runner
+
 # Konfigurasi runner
 echo "Configuring GitHub Actions Runner..."
-./config.sh --url https://github.com/Lincolncowper13/Henlinux --token $RUNNER_TOKEN --unattended
+sudo -u runner ./config.sh --url https://github.com/Lincolncowper13/Henlinux --token $RUNNER_TOKEN --unattended
 
 # Jalankan runner
 echo "Starting the GitHub Actions Runner..."
-./run.sh
+sudo -u runner ./run.sh
