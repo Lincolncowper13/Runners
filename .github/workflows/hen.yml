@@ -1,0 +1,9 @@
+jobs:
+  build:
+    runs-on: self-hosted  # Menggunakan runner yang sudah diatur
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Run tests
+      run: |
+        echo "Running tests"
