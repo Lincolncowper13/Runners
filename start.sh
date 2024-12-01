@@ -1,19 +1,34 @@
 #!/bin/bash
 
-# Buat folder untuk action runner
-mkdir actions-runner && cd actions-runner
+# Pastikan skrip tidak dijalankan sebagai root
+if [ "$EUID" -eq 0 ]; then
+  echo "Error: Script must not run with sudo or as root."
+  exit 1
+fi
 
-# Download package runner terbaru
+# Buat folder untuk runner dan pindah ke folder tersebut
+mkdir -p actions-runner && cd actions-runner
+
+# Unduh paket runner terbaru
+echo "Downloading the latest GitHub Actions Runner..."
 curl -o actions-runner-linux-x64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-x64-2.321.0.tar.gz
 
-# Opsional: Validasi hash
-echo "ba46ba7ce3a4d7236b16fbe44419fb453bc08f866b24f04d549ec89f1722a29e  actions-runner-linux-x64-2.321.0.tar.gz" | shasum -a 256 -c
+# Validasi hash (opsional)
+echo "Validating the hash of the downloaded file..."
+echo "ba46ba7ce3a4d7236b16fbe44419fb453bc08f866b24f04d549ec89f1722a29e  actions-runner-linux-x64-2.321.0.tar.gz" | sha256sum -c -
+if [ $? -ne 0 ]; then
+  echo "Error: Hash validation failed. Exiting."
+  exit 1
+fi
 
-# Ekstrak file installer
+# Ekstrak installer
+echo "Extracting the GitHub Actions Runner package..."
 tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz
 
-# Konfigurasi runner dengan GitHub repository
-./config.sh --url https://github.com/Lincolncowper13/Henlinux --token BKDJR2G3PI4LMZ2W3ML65ALHJRY3C
+# Konfigurasi runner
+echo "Configuring the GitHub Actions Runner..."
+./config.sh --url https://github.com/Lincolncowper13/Henlinux --token BKDJR2G3PI4LMZ2W3ML65ALHJRY3C --unattended
 
 # Jalankan runner
+echo "Starting the GitHub Actions Runner..."
 ./run.sh
