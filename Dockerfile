@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     tar \
     bash \
-    sha256sum
+    coreutils  # Menambahkan coreutils untuk mendapatkan sha256sum
 
 # Buat folder untuk runner dan pindah ke sana
 WORKDIR /actions-runner
