@@ -1,16 +1,21 @@
+# Gunakan image dasar yang tidak menjalankan root
 FROM ubuntu:20.04
 
-# Install dependencies
-RUN apt-get update && apt-get install -y curl bash coreutils
+# Install dependencies (gunakan apt tanpa sudo)
+RUN apt-get update && apt-get install -y \
+    curl \
+    tar \
+    bash \
+    sha256sum
 
-# Set working directory
-WORKDIR /app
+# Buat folder untuk runner dan pindah ke sana
+WORKDIR /actions-runner
 
-# Copy start.sh ke dalam container
-COPY start.sh .
+# Salin skrip yang dibutuhkan
+COPY start.sh /actions-runner/start.sh
 
-# Berikan izin eksekusi
-RUN chmod +x start.sh
+# Tentukan hak akses untuk skrip (non-root user)
+RUN chmod +x /actions-runner/start.sh
 
-# Jalankan skrip
-CMD ["bash", "start.sh"]
+# Jalankan skrip start.sh
+CMD ["./start.sh"]
