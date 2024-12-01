@@ -13,7 +13,7 @@ echo "ba46ba7ce3a4d7236b16fbe44419fb453bc08f866b24f04d549ec89f1722a29e  actions-
 tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz
 
 # Konfigurasi runner dengan GitHub repository
-./config.sh --url https://github.com/Lincolncowper13/Henlinux --token BKDJR2DPN323VAX4R6A3EETHJRRMG
+./config.sh --url https://github.com/Lincolncowper13/Henlinux --token BKDJR2G3PI4LMZ2W3ML65ALHJRY3C
 
 # Jalankan runner
 ./run.sh
