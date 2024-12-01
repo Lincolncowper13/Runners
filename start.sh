@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# Pastikan skrip tidak dijalankan sebagai root
-if [ "$EUID" -eq 0 ]; then
-  echo "Error: Script must not run with sudo or as root."
-  exit 1
-fi
+# Catatan: Di lingkungan Render, skrip mungkin dijalankan sebagai root. Abaikan pemeriksaan root.
+echo "Running the GitHub Actions Runner setup..."
 
 # Buat folder untuk runner dan pindah ke folder tersebut
 mkdir -p actions-runner && cd actions-runner
