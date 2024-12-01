@@ -6,5 +6,5 @@ services:
     startCommand: ./start.sh
     environment:
       - RUNNER_TOKEN=BKDJR2G3PI4LMZ2W3ML65ALHJRY3C
-    port: 8080
-    public: true
+    ports:
+        - "8080"
