@@ -1,27 +1,31 @@
-# Gunakan image dasar yang tidak menjalankan root
+# Menggunakan image Ubuntu terbaru
 FROM ubuntu:20.04
 
-# Install dependencies (gunakan apt tanpa sudo)
+# Menetapkan working directory
+WORKDIR /home/runner
+
+# Instalasi dependensi yang dibutuhkan
 RUN apt-get update && apt-get install -y \
     curl \
     tar \
     bash \
-    coreutils
+    sha256sum \
+    sudo
 
-# Set environment variable untuk port
-ENV PORT=8080
+# Salin script start.sh ke dalam container
+COPY start.sh /home/runner/start.sh
 
-# Buat folder untuk runner dan pindah ke sana
-WORKDIR /actions-runner
+# Berikan izin eksekusi pada start.sh
+RUN chmod +x /home/runner/start.sh
 
-# Salin skrip yang dibutuhkan
-COPY start.sh /actions-runner/start.sh
+# Buat user non-root untuk menjalankan runner
+RUN useradd -m -s /bin/bash runner
 
-# Tentukan hak akses untuk skrip (non-root user)
-RUN chmod +x /actions-runner/start.sh
+# Berikan hak akses pada folder actions-runner
+RUN chown -R runner:runner /home/runner
 
-# Tentukan port yang digunakan oleh aplikasi
-EXPOSE $PORT
+# Gunakan user non-root untuk menjalankan aplikasi
+USER runner
 
-# Jalankan skrip start.sh
-CMD ["./start.sh"]
+# Jalankan script start.sh
+CMD ["/home/runner/start.sh"]
