@@ -2,7 +2,9 @@ services:
   - type: web
     name: GithubActionsRunner
     env: docker
-    region: oregon
     dockerfilePath: ./Dockerfile
     plan: starter
     autoDeploy: true
+    envVars:
+      - key: PORT
+        value: "8080"
