@@ -6,7 +6,10 @@ RUN apt-get update && apt-get install -y \
     curl \
     tar \
     bash \
-    coreutils  # Menambahkan coreutils untuk mendapatkan sha256sum
+    coreutils
+
+# Set environment variable untuk port
+ENV PORT=8080
 
 # Buat folder untuk runner dan pindah ke sana
 WORKDIR /actions-runner
@@ -16,6 +19,9 @@ COPY start.sh /actions-runner/start.sh
 
 # Tentukan hak akses untuk skrip (non-root user)
 RUN chmod +x /actions-runner/start.sh
+
+# Tentukan port yang digunakan oleh aplikasi
+EXPOSE $PORT
 
 # Jalankan skrip start.sh
 CMD ["./start.sh"]
