@@ -22,7 +22,7 @@ tar xzf ./actions-runner-linux-x64-2.321.0.tar.gz
 
 # Konfigurasi runner
 echo "Configuring GitHub Actions Runner..."
-./config.sh --url https://github.com/Lincolncowper13/Henlinux --token BKDJR2G3PI4LMZ2W3ML65ALHJRY3C --unattended
+./config.sh --url https://github.com/Lincolncowper13/Henlinux --token $RUNNER_TOKEN --unattended
 
 # Jalankan runner
 echo "Starting the GitHub Actions Runner..."
