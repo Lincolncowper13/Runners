@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: GithubActionsRunner
+    name: github-actions-runner
     env: docker
-    dockerfilePath: ./Dockerfile
-    plan: starter
-    autoDeploy: true
-    envVars:
-      - key: PORT
-        value: "8080"
+    buildCommand: ./start.sh
+    startCommand: ./start.sh
+    environment:
+      - RUNNER_TOKEN=BKDJR2G3PI4LMZ2W3ML65ALHJRY3C
+    port: 8080
+    public: true
