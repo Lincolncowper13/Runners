@@ -2,9 +2,14 @@ services:
   - type: web
     name: github-actions-runner
     env: docker
-    buildCommand: ./start.sh
-    startCommand: ./start.sh
-    environment:
-      - RUNNER_TOKEN=BKDJR2G3PI4LMZ2W3ML65ALHJRY3C
-    ports:
-        - "8080"
+    buildCommand: ''
+    startCommand: '/home/runner/start.sh'
+    plan: free
+    regions:
+      - oregon
+    dockerfilePath: ./Dockerfile
+    branches:
+      - main
+    envVars:
+      - key: RUNNER_TOKEN
+        value: BKDJR2ATISNMLR5E2F2NIRTHJSBS4
